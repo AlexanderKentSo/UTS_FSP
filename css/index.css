@@ -23,9 +23,18 @@
 }
 
 #content {
-    background:antiquewhite !important; 
-    margin:-10px !important; 
-    padding: 80px 20px !important;
+    height: 100vh;
+    width: 100%;
+    position: static;
+    left: 0;
+    top: 0;
+    background: antiquewhite;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    padding: 50px 10px;
+    margin: -10px;
+    overflow-y: auto;
 }
 
 table, th, td {
@@ -37,7 +46,7 @@ table, th, td {
 
 .grid-template{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 0.4fr)); 
     gap: 50px;
     justify-content: center;
 }

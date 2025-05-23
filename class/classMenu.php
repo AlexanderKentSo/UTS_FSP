@@ -47,16 +47,17 @@ class classMenu extends classDB{
         $stmt->close();
 		return $res;
     }
-    public function getSearchMenu($keyword) {
+    public function getSearchMenu($keyword, $jenis) {
         $sql = "SELECT m.kode, m.nama as nama_m,mj.nama 
                 AS nama_mj,m.harga_jual,m.url_gambar 
                 FROM menu_jenis AS mj 
                 INNER JOIN menu AS m 
                 ON m.kode_jenis = mj.kode
                 WHERE m.nama LIKE ?";
+        if($jenis!=""){$sql .= " AND mj.nama = ?";}
 		$stmt = $this->mysqli->prepare($sql);
         $keyword = "%" . $keyword . "%";
-        $stmt->bind_param("s", $keyword);
+        ($jenis!="")? $stmt->bind_param("ss", $keyword, $jenis) : $stmt->bind_param("s", $keyword);
 		$stmt->execute();
 		$res = $stmt->get_result();
         $stmt->close();

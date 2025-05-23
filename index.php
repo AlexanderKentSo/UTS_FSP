@@ -82,14 +82,10 @@ else{ $message = ""; }
         z-index: 1;
         padding: 60px 20px 20px;
         color: antiquewhite;">
-        <h1 style="font-size: 80px;">Home</h1>
+        <h1 style="font-size: 80px; margin: 0;">Home</h1>
         <p style="font-size: 40px;"><?=$message?></p>
 
-        <div style="
-        display: grid; 
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-        gap: 50px;
-        justify-content: center;">
+        <div class="grid-template">
             <?php
             $res = $menu->getRandomMenu();
             while($row = $res->fetch_assoc()){
