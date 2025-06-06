@@ -91,6 +91,16 @@ table, th, td {
     font-weight: bold;
     transition: background-color 0.3s;
 }
+.btn-not-claim {
+    background-color: white;
+    color: #8D6E63;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
 
 .btn-claim:hover {
     background-color: #6D4C41;

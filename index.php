@@ -15,30 +15,6 @@ else{ $message = ""; }
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koffee StartBug</title>
     <link rel="stylesheet" href="css/index.css">
-    <style>
-    .card {
-        width: 320px;
-        height: 320px;
-        background: #fff;
-        border-radius: 20px;
-        margin: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .card img {
-        width: 100%;
-        height: 65%;
-        object-fit: cover;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-    }
-
-    .card-content {
-        padding: 15px;
-        color: black;
-    }
-    </style>
 </head>
 <body>
     <!-- header -->

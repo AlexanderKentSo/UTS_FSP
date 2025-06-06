@@ -12,17 +12,26 @@ $message = "";
 // buat insert voucher
 if(isset($_POST['insert'])){
     $nama = $_POST['nama'];
-    $jenis = $_POST['jenis'] ?? null;
-    $menu = $_POST['menu'] ?? null;
+    $jenis = $_POST['jenis'] ?? '';
+    $menu = $_POST['menu'] ?? '';
     $start = $_POST['start'];
     $end = $_POST['end'];
     $kuota = $_POST['kuota'];
     $diskon = $_POST['diskon'];
 
-    if($start>$end){$message = "end date can't occur before start date";}
-    else if($menu == null && $jenis == null){$message = "null exception";}
-    else if(!is_null($voucher->insertVoucher($menu,$jenis, $nama, $start, $end, $kuota, $diskon))){
-        $message = "Data ".$nama." inserted successfully";
+    if($start > $end) {
+        $message = "End date can't occur before start date";
+    }
+    else if($menu === '' && $jenis === '') {
+        $message = "Please select either a menu or jenis";
+    }
+    else {
+        try {
+            $result = $voucher->insertVoucher($menu, $jenis, $nama, $start, $end, $kuota, $diskon);
+            $message = "Data ".$nama." inserted successfully with ID: ".$result;
+        } catch(Exception $e) {
+            $message = "Error: ".$e->getMessage();
+        }
     }
 }
 

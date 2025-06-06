@@ -2,6 +2,7 @@
 session_start();
 
 $message = "Welcome";
+
 if($_SESSION["USER"]=="admin"){
     $message = "Welcome, ".$_SESSION["USER"];
 } else{
