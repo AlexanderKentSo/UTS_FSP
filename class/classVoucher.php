@@ -59,6 +59,28 @@ class classVoucher extends classDB{
         $stmt->close();
 		return $res;
     }
+    public function getVoucherClaimer($idvoucher) {
+        $sql = "SELECT v.nama AS vnama, m.nama AS mnama, mj.nama AS mjnama, kv.kode_unik, mem.iduser
+                    FROM voucher AS v 
+                    LEFT JOIN menu AS m 
+                    ON v.kode_menu = m.kode
+                    LEFT JOIN menu_jenis AS mj
+                    ON v.kode_jenis = mj.kode
+                    LEFT JOIN kepemilikan_voucher AS kv
+                    ON v.kode = kv.kode_voucher
+                    LEFT JOIN member AS mem
+                    ON mem.kode = kv.kode_member
+                    LEFT JOIN users AS u
+                    ON u.iduser = mem.iduser
+                    WHERE v.kode=?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param('s',$idvoucher);
+        
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $stmt->close();
+		return $res;
+    }
 
     public function claimVoucher($iduser, $idvoucher)
     {

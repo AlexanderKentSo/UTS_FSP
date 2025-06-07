@@ -68,7 +68,7 @@ if(isset($_GET['kode'])){
                 } else {
                     echo "
                     <div class='card-footer'>
-                        <button class='btn-claim' disabled>Voucher Tidak Berlaku</button>
+                        <button class='btn-not-claim' disabled>Voucher Tidak Berlaku</button>
                     </div>";
                 }
                 echo "</div>";
