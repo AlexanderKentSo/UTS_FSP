@@ -4,6 +4,12 @@ require_once("../class/classJenisMenu.php");
 require_once("../class/classVoucher.php");
 session_start();
 
+// Security check for admin access
+if ($_SESSION["USER"] != "admin") {
+    header("location: ../logout.php");
+    exit();
+}
+
 $_JenisMenu = new classJenisMenu();
 $_Menu = new classMenu();
 $voucher = new classVoucher();
@@ -11,7 +17,7 @@ $message = "";
 
 // buat insert voucher
 if(isset($_POST['insert'])){
-    $nama = $_POST['nama'];
+    $nama = trim($_POST['nama']); // Trim whitespace
     $jenis = $_POST['jenis'] ?? '';
     $menu = $_POST['menu'] ?? '';
     $start = $_POST['start'];
@@ -19,18 +25,23 @@ if(isset($_POST['insert'])){
     $kuota = $_POST['kuota'];
     $diskon = $_POST['diskon'];
 
-    if($start > $end) {
-        $message = "End date can't occur before start date";
-    }
-    else if($menu === '' && $jenis === '') {
-        $message = "Please select either a menu or jenis";
-    }
-    else {
+    // Basic validation
+    if (empty($nama) || empty($start) || empty($end) || !is_numeric($kuota) || !is_numeric($diskon)) {
+        $message = "Please fill all required fields correctly.";
+    } else if ($start > $end) {
+        $message = "End date can't occur before start date.";
+    } else if ($menu === '' && $jenis === '') {
+        $message = "Please select either a menu or a menu type for the discount.";
+    } else {
         try {
-            $result = $voucher->insertVoucher($menu, $jenis, $nama, $start, $end, $kuota, $diskon);
-            $message = "Data ".$nama." inserted successfully with ID: ".$result;
+            // Adjust 'none' string to actual NULL for database if your insertVoucher expects NULL
+            $menu_id = ($menu === 'none' || $menu === '') ? NULL : $menu;
+            $jenis_id = ($jenis === 'none' || $jenis === '') ? NULL : $jenis;
+
+            $result = $voucher->insertVoucher($menu_id, $jenis_id, $nama, $start, $end, $kuota, $diskon);
+            $message = "Data " . htmlspecialchars($nama) . " inserted successfully with ID: " . htmlspecialchars($result) . ".";
         } catch(Exception $e) {
-            $message = "Error: ".$e->getMessage();
+            $message = "Error: " . htmlspecialchars($e->getMessage()) . ".";
         }
     }
 }
@@ -40,6 +51,7 @@ if(isset($_GET['kode'])){
     $kode = $_GET['kode'];
     $voucher->deleteVoucher($kode);
     header("Location: voucher.php");
+    exit(); // Always exit after a header redirect
 }
 ?>
 
@@ -48,122 +60,161 @@ if(isset($_GET['kode'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koffee StartBug</title>
-    <link rel="stylesheet" href="../index.css">
-</head>
+    <title>Koffee StartBug - Kelola Voucher</title>
+    <link rel="stylesheet" href="../css/index.css">  
+     <link rel="stylesheet" href="../css/voucher.css"> </head>
 <body>
-    <div>
-    <a href="index.php">admin page</a>
-    <h1>Kelola Voucher</h1>
-    <form action="voucher.php" method="post">
-        <label for="nama">Nama Voucher: </label>
-        <input type="text" name="nama">
-
-        <br>
-        <label for="jenis">Jenis Menu yang diskon: </label>
-        <select name="jenis">
-            <?php
-            echo "<option value='none' selected disabled hidden>Select an Option</option>";
-            echo "<option value='none'></option>";
-            $res = $_JenisMenu->getJenisMenu();
-            while($row = $res->fetch_assoc()) { echo "<option value=".$row["kode"].">".$row['nama']."</option>";}
-            ?>
-        </select>
-
-        <br>
-        <label for="menu">Menu yang diskon: </label>
-        <select name="menu">
-            <?php
-            echo "<option value='none' selected disabled hidden>Select an Option</option>";
-            echo "<option value='none'></option>";
-            $res = $_Menu->getMenu();
-            while($row = $res->fetch_assoc()) 
-            {echo "<option value=".$row["kode"].">".$row['nama_m']."</option>";}
-            ?>
-        </select>
-
-        <br>
-        <label for="start">Tanggal mulai: </label>
-        <input type="date" name="start">
-
-        <br>
-        <label for="end">Tanggal berakhir: </label>
-        <input type="date" name="end">
-
-        <br>
-        <label for="kuota">Kuota maks: </label>
-        <input type="number" name="kuota" min="0">
-
-        <br>
-        <label for="diskon">Persen Diskon: </label>
-        <input type="number" name="diskon" min="0" max="100">
-
-        <br>
-        <input type="submit" value="insert" name="insert">
-    </form>
-    <p><?=$message?></p>
-
-    <h2>Voucher yang tersedia:</h2>
-    <?php
-    $jmlh = $voucher->getTotalData();
-
-    $limit = 5;
-    (isset($_GET['page']))? $page = $_GET['page'] : $page=1;
-    $offset = ($page-1)*$limit;
-    $res = $voucher->getVoucher($offset,$limit);
-
-    echo "<table>
-        <tr>
-            <th>Nama</th>
-            <th>Jenis Menu Diskon</th>
-            <th>Menu Diskon</th>
-            <th>Tanggal Mulai</th>
-            <th>Tanggal Berakhir</th>
-            <th>Kuota Maks</th>
-            <th>Kuota Sisa</th>
-            <th>Diskon</th>
-            <th>Hapus</th>
-            <th>Ubah</th>
-            <th>member claim</th>
-        </tr>";
-    while($row = $res->fetch_assoc()) {
-        echo 
-        "<tr>
-            <td>".$row["vnama"]."</td>";
-        
-        echo (isset($row['mjnama']))?"<td>".$row["mjnama"]."</td>":"<td>---</td>";
-        echo (isset($row['mnama']))?"<td>".$row["mnama"]."</td>":"<td>---</td>";
-
-        echo "<td>".$row['mulai_berlaku']."</td>
-            <td>".$row['akhir_berlaku']."</td>
-            <td>".$row['kuota_max']."</td>
-            <td>".$row['kuota_sisa']."</td>
-            <td>".$row['persen_diskon']."</td>
-            <td> <a href='voucher.php?kode=" . $row['kode'] . "'>Hapus Data</a> </td>
-            <td> <a href='ubahvoucher.php?kode=" . $row['kode'] . "'>Ubah Data</a> </td>
-            <td> <a href='membervoucher.php?kode=" . $row['kode'] . "'>member claim</a> </td>
-        </tr>";
-    }
-    echo "</table>";
-
-    $max_page = ceil($jmlh/$limit);
+    <header id="header">
+        <div style="display: flex; gap: 20px;">
+            <a href="index.php">Admin Home</a>
+            <a href="voucher.php">Kelola Voucher</a>
+            <a href="menu.php">Kelola Menu</a>
+            <a href="jenismenu.php">Kelola Jenis Menu</a>
+            <a href="member.php">Kelola Member</a>
+        </div>
+        <a href="../logout.php" style="position: absolute; right: 30px;">Log out</a>
+    </header>
     
-    if($max_page > 1){
-        echo "<div>";
-        if($page!=1){
-            echo "<a href="."voucher.php?page=1> first </a>
-            <a href="."menu.php?page=".($page-1)."> prev </a>";
-        }
-        for($i=1;$i<=$max_page;$i++){
-            echo ($i!=$page)?"<a href="."voucher.php?page=".$i."> ".$i." </a>":"<a> ".$i." </a>";
-        }
-        if($page!=$max_page){
-            echo "<a href="."voucher.php?page=".($page+1)."> next </a>
-            <a href="."voucher.php?page=".$max_page."> last </a>";
-        }
-        echo "</div>";
-    }
-    ?>
+    <div style="
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-image: url('https://i.pinimg.com/736x/1c/cc/8c/1ccc8c68fd5d9f7b283b8cd64c5dc567.jpg');
+        background-size: cover;
+        background-position: center;
+        z-index: -1;">
+    </div>
+    
+    <div style="
+        background-color: rgba(0,0,0,0.6);
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 0;">
+    </div>
+    
+    <div class="content-wrapper"> <h1 style="font-size: 80px; margin: 0;">Kelola Voucher</h1>
+        <p style="font-size: 24px; margin-top: 10px;"><?=$message?></p>
+
+        <div class="form-container">
+            <h2>Buat Voucher Baru</h2>
+            <form action="voucher.php" method="post">
+                <label for="nama">Nama Voucher: </label>
+                <input type="text" name="nama" id="nama" required>
+
+                <label for="jenis">Jenis Menu yang diskon: </label>
+                <select name="jenis" id="jenis">
+                    <option value='none' selected disabled hidden>Select a Type (Optional)</option>
+                    <option value='none'></option> <?php
+                    $resJenis = $_JenisMenu->getJenisMenu(0, 100); // Fetch all for dropdown
+                    while($row = $resJenis->fetch_assoc()) {
+                        echo "<option value='". htmlspecialchars($row["kode"]) ."'>". htmlspecialchars($row['nama']) ."</option>";
+                    }
+                    ?>
+                </select>
+
+                <label for="menu">Menu yang diskon: </label>
+                <select name="menu" id="menu">
+                    <option value='none' selected disabled hidden>Select a Menu (Optional)</option>
+                    <option value='none'></option> <?php
+                    $resMenu = $_Menu->getMenu(0, 100); // Fetch all for dropdown
+                    while($row = $resMenu->fetch_assoc()) {
+                        echo "<option value='". htmlspecialchars($row["kode"]) ."'>". htmlspecialchars($row['nama_m']) ."</option>";
+                    }
+                    ?>
+                </select>
+
+                <label for="start">Tanggal Mulai: </label>
+                <input type="date" name="start" id="start" required>
+
+                <label for="end">Tanggal Berakhir: </label>
+                <input type="date" name="end" id="end" required>
+
+                <label for="kuota">Kuota Maksimal: </label>
+                <input type="number" name="kuota" id="kuota" min="1" required> <label for="diskon">Persen Diskon: </label>
+                <input type="number" name="diskon" id="diskon" min="0" max="100" required>
+
+                <input type="submit" value="Insert" name="insert">
+            </form>
+        </div>
+
+        <h2>Voucher yang Tersedia:</h2>
+        <?php
+        $jmlh = $voucher->getTotalData();
+
+        $limit = 5;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($page-1)*$limit;
+        $res = $voucher->getVoucher($offset, $limit);
+
+        if ($res && $res->num_rows > 0): ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Jenis Menu Diskon</th>
+                        <th>Menu Diskon</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Berakhir</th>
+                        <th>Kuota Maks</th>
+                        <th>Kuota Sisa</th>
+                        <th>Diskon (%)</th>
+                        <th>Aksi</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while($row = $res->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row["vnama"]) ?></td>
+                        <td><?= isset($row['mjnama']) ? htmlspecialchars($row["mjnama"]) : '---' ?></td>
+                        <td><?= isset($row['mnama']) ? htmlspecialchars($row["mnama"]) : '---' ?></td>
+                        <td><?= htmlspecialchars($row['mulai_berlaku']) ?></td>
+                        <td><?= htmlspecialchars($row['akhir_berlaku']) ?></td>
+                        <td><?= htmlspecialchars($row['kuota_max']) ?></td>
+                        <td><?= htmlspecialchars($row['kuota_sisa']) ?></td>
+                        <td><?= htmlspecialchars($row['persen_diskon']) ?></td>
+                        <td>
+                            <a href='voucher.php?kode=<?= htmlspecialchars($row['kode']) ?>' class="delete-link" onclick="return confirm('Are you sure you want to delete this voucher?');">Hapus</a> | 
+                            <a href='ubahvoucher.php?kode=<?= htmlspecialchars($row['kode']) ?>'>Ubah</a>
+                        </td>
+                        <td><a href='membervoucher.php?kode=<?= htmlspecialchars($row['kode']) ?>'>Member Claim</a></td>
+                    </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>No vouchers available.</p>
+        <?php endif; ?>
+
+        <?php
+        $max_page = ceil($jmlh/$limit);
+        
+        if($max_page > 1): ?>
+            <div class="pagination">
+                <?php if($page != 1): ?>
+                    <a href="voucher.php?page=1">First</a>
+                    <a href="voucher.php?page=<?= $page-1 ?>">Prev</a>
+                <?php endif; ?>
+                
+                <?php for($i=1;$i<=$max_page;$i++): ?>
+                    <?php if($i!=$page): ?>
+                        <a href="voucher.php?page=<?= $i ?>"><?= $i ?></a>
+                    <?php else: ?>
+                        <span><?= $i ?></span>
+                    <?php endif; ?>
+                <?php endfor; ?>
+                
+                <?php if($page!=$max_page): ?>
+                    <a href="voucher.php?page=<?= $page+1 ?>">Next</a>
+                    <a href="voucher.php?page=<?= $max_page ?>">Last</a>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
     </div>
 </body>
 </html>

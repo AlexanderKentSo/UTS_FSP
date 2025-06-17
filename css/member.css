@@ -1,0 +1,74 @@
+table img {
+    max-width: 80px; 
+    height: auto;
+    border-radius: 5px; 
+}
+/* --- member.css --- */
+
+/* Tab navigation styles */
+.tab-container {
+    margin: 20px 0;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tab {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: antiquewhite;
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.tab:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.tab.active-tab {
+    background-color: #007bff;
+    font-weight: bold;
+    color: white;
+}
+
+.tab.active-tab:hover {
+    background-color: #0056b3;
+}
+
+/* Action links (Terima/Tolak) */
+.action-link.accept {
+    color: #28a745; /* Green for accept */
+}
+
+.action-link.accept:hover {
+    color: #218838;
+}
+
+.action-link.decline {
+    color: #dc3545; /* Red for decline */
+}
+
+.action-link.decline:hover {
+    color: #c82333;
+}
+
+/* Responsive adjustments for tabs */
+@media (max-width: 600px) {
+    .tab-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .tab {
+        width: 100%;
+        text-align: center;
+    }
+}

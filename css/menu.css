@@ -1,0 +1,44 @@
+
+.form-container select {
+    width: calc(100% - 22px); 
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+}
+
+/* Styles for file input unique to menu management */
+.form-container input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 15px;
+    color: antiquewhite;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+table img {
+    max-width: 80px;
+    height: auto;
+    border-radius: 5px;
+    vertical-align: middle;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .form-container select,
+    .form-container input[type="file"] {
+        width: 100%;
+    }
+}

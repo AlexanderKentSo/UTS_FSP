@@ -5,16 +5,26 @@ $jenisMenu = new classJenisMenu();
 
 $message = "";
 
-if(isset($_POST['insert'])){
-    $nama = $_POST['nama'];
-    if(!is_null($jenisMenu->insertJenisMenu($nama))) 
-    {$message = "Data ".$nama." inserted successfully";}
+// Redirect if not admin
+if ($_SESSION["USER"] != "admin") {
+    header("location: ../logout.php");
+    exit();
 }
 
-if(isset($_GET['kode'])){
+if (isset($_POST['insert'])) {
+    $nama = $_POST['nama'];
+    if (!is_null($jenisMenu->insertJenisMenu($nama))) {
+        $message = "Data " . htmlspecialchars($nama) . " inserted successfully"; // Sanitize output
+    } else {
+        $message = "Failed to insert data."; // Add a failure message
+    }
+}
+
+if (isset($_GET['kode'])) {
     $kode = $_GET['kode'];
     $jenisMenu->deleteJenisMenu($kode);
     header("Location: jenismenu.php");
+    exit(); // Always call exit after a header redirect
 }
 ?>
 
@@ -23,62 +33,112 @@ if(isset($_GET['kode'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koffee StartBug</title>
-    <link rel="stylesheet" href="../index.css">
+    <title>Koffee StartBug - Kelola Jenis Menu</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <style>
+        
+    </style>
 </head>
 <body>
-    <div>
-    <a href="index.php">admin page</a>
-    <h1>Kelola jenis menu</h1>
-    <form action="jenismenu.php" method="post">
-        <label for="nama">Masukan Jenis Menu: </label>
-        <input type="text" name="nama">
-        <input type="submit" value="insert" name="insert">
-    </form>
-    <p><?=$message?></p>
-
-    <h2>Jenis menu yang tersedia:</h2>
-    <?php
-    $jmlh = $jenisMenu->getTotalData();
-
-    $limit = 5;
-    (isset($_GET['page']))? $page = $_GET['page'] : $page=1;
-    $offset = ($page-1)*$limit;
-    $res = $jenisMenu->getJenisMenu($offset,$limit);
-
-    echo "<table>
-        <tr>
-            <th>Nama</th>
-            <th>Hapus</th>
-            <th>Ubah</th>
-        </tr>";
-    while($row = $res->fetch_assoc()) {
-        echo "<tr>
-                <td>".$row['nama']."</td>
-                <td> <a href='jenismenu.php?kode=" . $row['kode'] . "'>Hapus Data</a> </td>
-                <td> <a href='ubahjenismenu.php?kode=" . $row['kode'] . "'>Ubah Data</a> </td>
-            </tr>";
-    }
-    echo "</ul>";
+    <header id="header">
+        <div style="display: flex; gap: 20px;">
+            <a href="index.php">Admin Home</a>
+            <a href="voucher.php">Kelola Voucher</a>
+            <a href="menu.php">Kelola Menu</a>
+            <a href="jenismenu.php">Kelola Jenis Menu</a>
+            <a href="member.php">Kelola Member</a>
+        </div>
+        <a href="../logout.php" style="position: absolute; right: 30px;">Log out</a>
+    </header>
     
-    $max_page = ceil($jmlh/$limit);
+    <div style="
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-image: url('https://i.pinimg.com/736x/1c/cc/8c/1ccc8c68fd5d9f7b283b8cd64c5dc567.jpg');
+        background-size: cover;
+        background-position: center;
+        z-index: -1;">
+    </div>
     
-    if($max_page > 1){
-    echo "<div>";
-        if($page!=1){
-            echo "<a href="."jenismenu.php?page=1> first </a>
-            <a href="."jenismenu.php?page=".($page-1)."> prev </a>";
+    <div style="
+        background-color: rgba(0,0,0,0.6);
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 0;">
+    </div>
+    
+    <div style="
+        position: relative;
+        z-index: 1;
+        padding: 60px 20px 20px;
+        color: antiquewhite;">
+        <h1 style="font-size: 80px; margin: 0;">Kelola Jenis Menu</h1>
+        <p style="font-size: 24px; margin-top: 10px;"><?=$message?></p>
+
+        <div class="form-container">
+            <h2>Tambah Jenis Menu</h2>
+            <form action="jenismenu.php" method="post">
+                <label for="nama">Masukan Jenis Menu:</label>
+                <input type="text" name="nama" id="nama" required>
+                <input type="submit" value="Insert" name="insert">
+            </form>
+        </div>
+
+        <h2>Jenis Menu yang Tersedia:</h2>
+        <?php
+        $jmlh = $jenisMenu->getTotalData();
+
+        $limit = 5;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+        $res = $jenisMenu->getJenisMenu($offset, $limit);
+
+        if ($res->num_rows > 0) {
+            echo "<table>
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Hapus</th>
+                        <th>Ubah</th>
+                    </tr>
+                </thead>
+                <tbody>";
+            while ($row = $res->fetch_assoc()) {
+                echo "<tr>
+                        <td>" . htmlspecialchars($row['nama']) . "</td>
+                        <td> <a href='jenismenu.php?kode=" . htmlspecialchars($row['kode']) . "' class='delete-link' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Hapus Data</a> </td>
+                        <td> <a href='ubahjenismenu.php?kode=" . htmlspecialchars($row['kode']) . "'>Ubah Data</a> </td>
+                    </tr>";
+            }
+            echo "</tbody></table>";
+        } else {
+            echo "<p>No menu types available.</p>";
         }
-        for($i=1;$i<=$max_page;$i++){
-            echo ($i!=$page)?"<a href="."jenismenu.php?page=".$i."> ".$i." </a>":"<a> ".$i." </a>";
+
+        $max_page = ceil($jmlh / $limit);
+
+        if ($max_page > 1) {
+            echo "<div class='pagination'>";
+            if ($page != 1) {
+                echo "<a href='jenismenu.php?page=1'>First</a>";
+                echo "<a href='jenismenu.php?page=" . ($page - 1) . "'>Prev</a>";
+            }
+            for ($i = 1; $i <= $max_page; $i++) {
+                echo ($i != $page) ? "<a href='jenismenu.php?page=" . $i . "'>" . $i . "</a>" : "<span>" . $i . "</span>";
+            }
+            if ($page != $max_page) {
+                echo "<a href='jenismenu.php?page=" . ($page + 1) . "'>Next</a>";
+                echo "<a href='jenismenu.php?page=" . $max_page . "'>Last</a>";
+            }
+            echo "</div>";
         }
-        if($page!=$max_page){
-            echo "<a href="."jenismenu.php?page=".($page+1)."> next </a>
-            <a href="."jenismenu.php?page=".$max_page."> last </a>";
-        }
-        echo "</div>";
-    }
-    ?>
+        ?>
     </div>
 </body>
 </html>
