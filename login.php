@@ -40,20 +40,16 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koffee StartBug</title>
-    <link rel="stylesheet" href="index.css">
-    <style>
-        form{
-            border:1px #683416 solid; 
-            padding: 20px; 
-            border-radius: 20px;
-        }
-        form div{
-            margin: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="css/login.css">
+
 </head>
+
 <body>
-    <div id="content">
+        <div class="background-container"></div>
+    <div class="overlay"></div>
+<div class="login-wrapper">
+    <div class="form-container">
         <h1>Welcome to Koffee StartBug</h1>
         <form action="login.php" method="post">
             <div>
@@ -81,6 +77,6 @@ if (isset($_POST['login'])) {
         </form>
         <a href="register.php" class="register-link">Don't have an account? Register here</a>
         <p class="message"><?=$message?></p>
-    </div>
+    </div></div>
 </body>
 </html>

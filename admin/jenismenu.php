@@ -30,15 +30,17 @@ if (isset($_GET['kode'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koffee StartBug - Kelola Jenis Menu</title>
     <link rel="stylesheet" href="../css/index.css">
     <style>
-        
+
     </style>
 </head>
+
 <body>
     <header id="header">
         <div style="display: flex; gap: 20px;">
@@ -47,10 +49,11 @@ if (isset($_GET['kode'])) {
             <a href="menu.php">Kelola Menu</a>
             <a href="jenismenu.php">Kelola Jenis Menu</a>
             <a href="member.php">Kelola Member</a>
+            <a></a>
         </div>
         <a href="../logout.php" style="position: absolute; right: 30px;">Log out</a>
     </header>
-    
+
     <div style="
         height: 100vh;
         width: 100%;
@@ -62,7 +65,7 @@ if (isset($_GET['kode'])) {
         background-position: center;
         z-index: -1;">
     </div>
-    
+
     <div style="
         background-color: rgba(0,0,0,0.6);
         height: 100vh;
@@ -72,14 +75,14 @@ if (isset($_GET['kode'])) {
         top: 0;
         z-index: 0;">
     </div>
-    
+
     <div style="
         position: relative;
         z-index: 1;
         padding: 60px 20px 20px;
         color: antiquewhite;">
         <h1 style="font-size: 80px; margin: 0;">Kelola Jenis Menu</h1>
-        <p style="font-size: 24px; margin-top: 10px;"><?=$message?></p>
+        <p style="font-size: 24px; margin-top: 10px;"><?= $message ?></p>
 
         <div class="form-container">
             <h2>Tambah Jenis Menu</h2>
@@ -95,7 +98,7 @@ if (isset($_GET['kode'])) {
         $jmlh = $jenisMenu->getTotalData();
 
         $limit = 5;
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $offset = ($page - 1) * $limit;
         $res = $jenisMenu->getJenisMenu($offset, $limit);
 
@@ -141,4 +144,5 @@ if (isset($_GET['kode'])) {
         ?>
     </div>
 </body>
+
 </html>

@@ -10,7 +10,7 @@ else{ $message = ""; }
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koffee StartBug</title>
@@ -19,13 +19,14 @@ else{ $message = ""; }
 <body>
     <!-- header -->
     <header id="header">
-        <div style="display: flex; gap: 20px;">
+        <div  class="nav-links">
             <a href="index.php">Home</a>
             <a href="menu.php">Menu</a>
             <a href="promo.php">Promo</a>
             <a href="voucherku.php">Voucherku</a>
+
         </div>
-        <a href="logout.php" style="position: absolute; right: 30px;">Log out</a>
+        <a href="logout.php">Log out</a>
     </header>
     
     <!-- background -->
@@ -54,6 +55,7 @@ else{ $message = ""; }
     
     <!-- content -->
     <div style="
+        width:30%;
         position: relative;
         z-index: 1;
         padding: 60px 20px 20px;

@@ -1,25 +1,52 @@
-#header{
-    position: relative;
-    display: flex;
-    background-color: #a25122;
-    height: 36px;
-    width: 100%;
-    position: fixed;
-    z-index: 100;
+
+
+body {
     margin: 0;
-    padding: 10px;
-    top: 0;
-    left: 0;
-    justify-content: center;
-    align-items: center;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
 }
 
-#header a{
-    color: wheat;
+/* Header Styles */
+#header {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: antiquewhite;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: calc(100% - 60px);
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+#header a {
+    color: antiquewhite;
     text-decoration: none;
     font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
     margin: 0 20px;
+}
+
+#header a:hover {
+    color: #ffd700;
+}
+.nav-links {
+  display: flex;
+  gap: 20px; 
+}
+
+/* Common Content Wrapper Styles */
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+    padding: 80px 20px 20px;
+    color: antiquewhite;
+    min-height: 100vh;
 }
 
 #content {
@@ -37,139 +64,7 @@
     overflow-y: auto;
 }
 
-table, th, td {
-    border-collapse: collapse;
-    border: 1px solid;
-    width: 80%;
-    padding: 10px;
-}
-
-.grid-template{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 0.4fr)); 
-    gap: 50px;
-    justify-content: center;
-}
-
-.card {
-    width: 320px;
-    background: #fff;
-    border-radius: 20px;
-    margin: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.card img {
-    width: 100%;
-    height: 65%;
-    object-fit: cover;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
-
-.card-content {
-    padding: 15px;
-    color: black;
-}
-
-.card-footer {
-    display: flex;
-    justify-content: flex-end;
-    padding: 15px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #eee;
-}
-
-.btn-claim {
-    background-color: #8D6E63;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-.btn-not-claim {
-    background-color: white;
-    color: #8D6E63;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-.btn-claim:hover {
-    background-color: #6D4C41;
-}
-.admin-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px; 
-            margin-top: 30px;
-        }
-
-        .admin-links a {
-            font-size: 24px; 
-            color: antiquewhite; 
-            text-decoration: none; 
-            padding: 10px 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-
-        .admin-links a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4; /* Fallback for no background image */
-}
-
-/* Header styles (from your original index.php) */
-#header {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: antiquewhite;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    width: calc(100% - 60px); /* Adjust for padding */
-    top: 0;
-    left: 0;
-    z-index: 100;
-}
-
-#header a {
-    color: antiquewhite;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1em;
-    padding: 5px 10px;
-    transition: color 0.3s ease;
-}
-
-#header a:hover {
-    color: #ffd700; /* Gold-like hover */
-}
-
-/* Common content container styles (previously inline in admin pages) */
-.content-wrapper {
-    position: relative;
-    z-index: 1;
-    padding: 60px 20px 20px; /* Adjust top padding for fixed header */
-    color: antiquewhite;
-}
-
-/* Common Form Styles (moved from adminmember.css) */
+/* Common Form Styles */
 .form-container {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 25px;
@@ -195,8 +90,10 @@ body {
 .form-container input[type="text"],
 .form-container input[type="email"],
 .form-container input[type="password"],
-.form-container input[type="number"] {
-    width: calc(100% - 22px); /* Account for padding and border */
+.form-container input[type="number"],
+.form-container input[type="date"]  
+{
+    width: calc(100% - 22px);
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
@@ -206,8 +103,36 @@ body {
     font-size: 1em;
 }
 
+.form-container select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+}
+
+.form-container input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 15px;
+    color: antiquewhite;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
 .form-container input[type="submit"] {
-    background-color: #28a745; /* Green for insert/add */
+    background-color: #28a745;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -221,6 +146,7 @@ body {
     background-color: #218838;
 }
 
+/* Common Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -231,7 +157,9 @@ table {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-table th, table td {
+table, th, td {
+    border-collapse: collapse;
+    border: 1px solid;
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -248,7 +176,7 @@ table tr:last-child td {
 }
 
 table a {
-    color: #007bff; /* Blue for links */
+    color: #007bff;
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -259,13 +187,14 @@ table a:hover {
 }
 
 .delete-link {
-    color: #dc3545; /* Red for delete */
+    color: #dc3545;
 }
 
 .delete-link:hover {
     color: #c82333;
 }
 
+/* Common Pagination Styles */
 .pagination {
     display: flex;
     justify-content: center;
@@ -290,11 +219,110 @@ table a:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-.pagination span { /* Style for current page */
+.pagination span {
     background-color: #007bff;
     font-weight: bold;
 }
 
+/* Admin Specific Links */
+.admin-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.admin-links a {
+    font-size: 24px;
+    color: antiquewhite;
+    text-decoration: none;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.admin-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Promo Card Specific Styles */
+.grid-template {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+    justify-content: center;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease-in-out;
+    margin: 10px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: block;
+}
+
+.card-content {
+    padding: 15px;
+    color: #ffff;
+}
+
+.card-content h1, .card-content h3 {
+    margin: 5px 0;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #eee;
+}
+
+.btn-claim {
+    background-color: #8D6E63;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-not-claim {
+    background-color: #E0E0E0;
+    color: #8D6E63;
+    border: 1px solid #BDBDBD;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-not-claim:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn-claim:hover {
+    background-color: #6D4C41;
+}
 
 @media (max-width: 768px) {
     #header {
@@ -311,7 +339,7 @@ table a:hover {
     .form-container input[type="email"],
     .form-container input[type="password"],
     .form-container input[type="number"],
-    .form-container input[type="submit"] {
+    .form-container select {
         width: 100%;
     }
     table th, table td {
@@ -321,40 +349,45 @@ table a:hover {
     .pagination {
         flex-wrap: wrap;
     }
+    .grid-template {
+        gap: 15px;
+    }
 }
 
+@media (max-width: 600px) {
+    .grid-template {
+        gap: 20px;
+    }
+    .card {
+        width: 100%;
+    }
+     /* #header {
+    flex-direction: column; 
+    align-items: center;
+    gap: 15px; 
+  }
 
-.grid-template {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px 0;
+  .nav-links {
+    flex-direction: column; 
+    align-items: center;
+    gap: 10px; 
+  } */
 }
 
-.card {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-}
-
-.card-content {
-    padding: 15px;
-    color: antiquewhite;
-}
-
-.card-content h1, .card-content h3 {
-    margin: 5px 0;
+@media (max-width: 480px) {
+    .grid-template {
+        grid-template-columns: 1fr;
+        /* fractional unit max */
+      
+        gap: 25px;
+    }
+    .card {
+        width: auto;
+    }
+    .card-content h1 {
+        font-size: 1.5em;
+    }
+    .card-content h3 {
+        font-size: 0.9em;
+    }
 }
