@@ -17,7 +17,7 @@ else{ $message = ""; }
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <!-- header -->
+    
     <header id="header">
         <div  class="nav-links">
             <a href="index.php">Home</a>
@@ -29,7 +29,7 @@ else{ $message = ""; }
         <a href="logout.php">Log out</a>
     </header>
     
-    <!-- background -->
+    
     <div style="
         height: 100vh;
         width: 100%;
@@ -42,7 +42,7 @@ else{ $message = ""; }
         z-index: -1;">
     </div>
     
-    <!-- overlay -->
+    
     <div style="
         background-color: rgba(0,0,0,0.6);
         height: 100vh;
@@ -53,15 +53,16 @@ else{ $message = ""; }
         z-index: 0;">
     </div>
     
-    <!-- content -->
+    
     <div style="
-        width:30%;
+        max-width: 100%; 
+        margin: 0 auto;
         position: relative;
         z-index: 1;
         padding: 60px 20px 20px;
         color: antiquewhite;">
-        <h1 style="font-size: 80px; margin: 0;">Home</h1>
-        <p style="font-size: 40px;"><?=$message?></p>
+        <h1 style="font-size: 80px; margin: 0; text-align: center">Home</h1>
+        <p style="font-size: 40px; text-align: center"><?=$message?></p>
 
         <div class="grid-template">
             <?php
@@ -79,6 +80,8 @@ else{ $message = ""; }
                 ";}
             ?>
         </div>
+
+        
     </div>
 </body>
 </html>

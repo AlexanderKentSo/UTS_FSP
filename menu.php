@@ -28,7 +28,7 @@ $jenisMenu = new classJenisMenu(); // Changed variable name for clarity
             <a href="promo.php">Promo</a>
             <a href="voucherku.php">Voucherku</a>
         </div>
-        <a href="logout.php"></a>Log out</a>
+        <a href="logout.php">Log out</a>
     </header>
     <div style="
         height: 100vh;
@@ -71,8 +71,8 @@ $jenisMenu = new classJenisMenu(); // Changed variable name for clarity
                 ?>
             </select>
         </div>
-
-        <div class="grid-template" style="width:30%">
+        <div class="grid-wrapper">
+            <div class="grid-template" style="width:80%">
             <?php
             $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
             $res = $menu->getSearchMenu($keyword, "");
@@ -92,6 +92,7 @@ $jenisMenu = new classJenisMenu(); // Changed variable name for clarity
                 echo "<p>No menu items found</p>";
             }
             ?>
+            </div>
         </div>
     </div>
 
