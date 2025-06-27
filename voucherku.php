@@ -20,17 +20,28 @@ if (!isset($_SESSION["USER"])) {
 </head>
 
 <body>
-    <!-- header -->
     <header id="header">
-        <div  class="nav-links">
-            <a href="index.php">Home</a>
-            <a href="menu.php">Menu</a>
-            <a href="promo.php">Promo</a>
-            <a href="voucherku.php">Voucherku</a>
+    <!-- Hamburger Button -->
+    <div id="hamburger" onclick="toggleMenu()">
+        ☰
+    </div>
 
-        </div>
-        <a href="logout.php">Log out</a>
+    <div  class="nav-links">
+        <a href="index.php">Home</a>
+        <a href="menu.php">Menu</a>
+        <a href="promo.php">Promo</a>
+        <a href="voucherku.php">Voucherku</a>
+    </div>
+
+    <a href="logout.php">Log out</a>
     </header>
+    <script>
+    function toggleMenu() {
+        const nav = document.querySelector('.nav-links');
+        nav.classList.toggle('show');
+    }
+    </script>
+
     <div style="
         height: 100vh;
         width: 100%;

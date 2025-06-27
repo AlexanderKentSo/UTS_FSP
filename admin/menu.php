@@ -51,15 +51,26 @@ if(isset($_GET['kode'])){
     <link rel="stylesheet" href="../css/menu.css">   </head>
 <body>
     <header id="header">
-        <div style="display: flex; gap: 20px;">
-            <a href="index.php">Admin Home</a>
-            <a href="voucher.php">Kelola Voucher</a>
-            <a href="menu.php">Kelola Menu</a>
-            <a href="jenismenu.php">Kelola Jenis Menu</a>
-            <a href="member.php">Kelola Member</a>
-        </div>
-        <a href="../logout.php" style="position: absolute; right: 30px;">Log out</a>
+    <!-- Tombol Hamburger -->
+    <div id="hamburger" onclick="toggleMenu()">☰</div>
+
+    <!-- Navigasi Admin -->
+    <nav class="nav-links">
+        <a href="index.php">Admin Home</a>
+        <a href="voucher.php">Kelola Voucher</a>
+        <a href="menu.php">Kelola Menu</a>
+        <a href="jenismenu.php">Kelola Jenis Menu</a>
+        <a href="member.php">Kelola Member</a>
+    </nav>
+    
+    <a href="../logout.php">Log out</a>
     </header>
+    <script>
+    function toggleMenu() {
+        const nav = document.querySelector('.nav-links');
+        nav.classList.toggle('show');
+    }
+    </script>
     
     <div style="
         height: 100vh;
@@ -114,76 +125,67 @@ if(isset($_GET['kode'])){
         </div>
 
         <h2>Menu yang Tersedia:</h2>
+
         <?php
         $jmlh = $menu->getTotalData();
-
         $limit = 5;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $offset = ($page-1)*$limit;
+        $offset = ($page - 1) * $limit;
         $res = $menu->getMenu($offset, $limit);
+        ?>
 
-        if ($res && $res->num_rows > 0): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nama</th>
-                        <th>Jenis</th>
-                        <th>Harga</th>
-                        <th>Gambar</th>
-                        <th>Hapus</th>
-                        <th>Ubah</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while($row = $res->fetch_assoc()): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($row["nama_m"]) ?></td>
-                        <td><?= htmlspecialchars($row["nama_mj"]) ?></td>
-                        <td><?= htmlspecialchars($row["harga_jual"]) ?></td>
-                        <td>
-                            <?php if (!empty($row['url_gambar']) && file_exists("../".$row['url_gambar'])): ?>
-                                <img src="../<?= htmlspecialchars($row["url_gambar"]) ?>" alt="<?= htmlspecialchars($row["nama_m"]) ?>">
-                            <?php else: ?>
-                                No Image
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <a href='menu.php?kode=<?= htmlspecialchars($row['kode']) ?>' class="delete-link" onclick="return confirm('Are you sure you want to delete this menu item?');">Hapus Data</a>
-                        </td>
-                        <td>
-                            <a href='ubahmenu.php?kode=<?= htmlspecialchars($row['kode']) ?>'>Ubah Data</a>
-                        </td>
-                    </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
+        <?php if ($res && $res->num_rows > 0): ?>
+        <div class="grid-wrapper">
+            <div class="grid-template">
+                <?php while($row = $res->fetch_assoc()): ?>
+                <div class="card">
+                    <?php if (!empty($row['url_gambar']) && file_exists("../" . $row['url_gambar'])): ?>
+                        <img src="../<?= htmlspecialchars($row["url_gambar"]) ?>" alt="<?= htmlspecialchars($row["nama_m"]) ?>">
+                    <?php else: ?>
+                        <img src="placeholder.png" alt="No Image">
+                    <?php endif; ?>
+                    <div class="card-content">
+                        <h1><?= htmlspecialchars($row["nama_m"]) ?></h1>
+                        <h3>Jenis: <?= htmlspecialchars($row["nama_mj"]) ?></h3>
+                        <h3>Harga: Rp<?= htmlspecialchars(number_format($row["harga_jual"], 0, ',', '.')) ?></h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="voucher-action">
+                        <a href='menu.php?kode=<?= htmlspecialchars($row['kode']) ?>' class="delete-link" onclick="return confirm('Yakin ingin menghapus menu ini?');">Hapus</a> |
+                        <a href='ubahmenu.php?kode=<?= htmlspecialchars($row['kode']) ?>'>Ubah</a>
+                        </div>
+                    </div>
+                </div>
+                <?php endwhile; ?>
+            </div>
+        </div>
         <?php else: ?>
             <p>No menu items available.</p>
         <?php endif; ?>
-        
+
+        <!-- Pagination -->
         <?php
-        $max_page = ceil($jmlh/$limit);
-        if($max_page > 1): ?>
-            <div class="pagination">
-                <?php if($page != 1): ?>
+        $max_page = ceil($jmlh / $limit);
+        if ($max_page > 1): ?>
+            <div class="pagination" style="text-align:center; margin-top:20px;">
+                <?php if ($page != 1): ?>
                     <a href="menu.php?page=1">First</a>
-                    <a href="menu.php?page=<?= $page-1 ?>">Prev</a>
+                    <a href="menu.php?page=<?= $page - 1 ?>">Prev</a>
                 <?php endif; ?>
-                
-                <?php for($i=1; $i<=$max_page; $i++): ?>
-                    <?php if($i != $page): ?>
+
+                <?php for ($i = 1; $i <= $max_page; $i++): ?>
+                    <?php if ($i != $page): ?>
                         <a href="menu.php?page=<?= $i ?>"><?= $i ?></a>
                     <?php else: ?>
-                        <span><?= $i ?></span>
+                        <span><strong><?= $i ?></strong></span>
                     <?php endif; ?>
                 <?php endfor; ?>
-                
-                <?php if($page != $max_page): ?>
-                    <a href="menu.php?page=<?= $page+1 ?>">Next</a>
+
+                <?php if ($page != $max_page): ?>
+                    <a href="menu.php?page=<?= $page + 1 ?>">Next</a>
                     <a href="menu.php?page=<?= $max_page ?>">Last</a>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
-    </div>
 </body>
 </html>

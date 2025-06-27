@@ -9,12 +9,16 @@ table img {
 .tab-container {
     margin: 20px 0;
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     justify-content: center;
     padding: 15px;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
 }
 
 .tab {
@@ -44,22 +48,72 @@ table img {
     background-color: #0056b3;
 }
 
-/* Action links (Terima/Tolak) */
-.action-link.accept {
-    color: #28a745; /* Green for accept */
-}
-
 .action-link.accept:hover {
     color: #218838;
-}
-
-.action-link.decline {
-    color: #dc3545; /* Red for decline */
 }
 
 .action-link.decline:hover {
     color: #c82333;
 }
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    color: antiquewhite;
+    backdrop-filter: blur(10px);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #ccc;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-content h3 {
+    margin: 0 0 10px;
+    font-size: 1.2em;
+}
+
+.card-content p {
+    margin: 5px 0;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px 15px;
+}
+
+.action-link {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.accept {
+    background-color: green;
+}
+
+.decline {
+    background-color: red;
+}
+
 
 /* Responsive adjustments for tabs */
 @media (max-width: 600px) {

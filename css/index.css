@@ -29,15 +29,51 @@ body {
     font-size: 1.1em;
     padding: 5px 10px;
     transition: color 0.3s ease;
-    margin: 0 20px;
+    margin: 0 10px;
 }
 
 #header a:hover {
     color: #ffd700;
 }
+
 .nav-links {
-  display: flex;
-  gap: 20px; 
+    display: flex;
+    gap: 20px;
+}
+
+/* Hamburger default: hidden */
+#hamburger {
+    display: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: antiquewhite;
+}
+
+/* Responsive styles */
+@media (max-width: 1165px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 10px;
+        background-color: rgba(0, 0, 0, 0.95);
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 99;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    #hamburger {
+        display: block;
+    }
+
+    #header {
+        justify-content: space-between;
+    }
 }
 
 /* Common Content Wrapper Styles */
@@ -288,10 +324,43 @@ table a:hover {
 
 .card-footer {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     padding: 15px;
     background-color: #f5f5f5;
     border-top: 1px solid #eee;
+}
+
+.voucher-status h4 {
+    margin: 0 0 10px 0;
+    color: green;
+}
+
+.voucher-status .inactive {
+    color: red;
+}
+
+.voucher-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.voucher-actions a {
+    position: relative;
+    padding: 0 10px;
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.voucher-actions a:not(:last-child)::after {
+    content: "|";
+    position: absolute;
+    right: 0;
+    color: #000;
 }
 
 .btn-claim {

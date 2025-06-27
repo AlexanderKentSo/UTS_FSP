@@ -38,15 +38,26 @@ if(isset($_GET['kode']) && isset($_GET['aksi'])){
      <link rel="stylesheet" href="../css/member.css"> </head>
 <body>
     <header id="header">
-       <div style="display: flex; gap: 20px;">
-            <a href="index.php">Admin Home</a>
-            <a href="voucher.php">Kelola Voucher</a>
-            <a href="menu.php">Kelola Menu</a>
-            <a href="jenismenu.php">Kelola Jenis Menu</a>
-            <a href="member.php">Kelola Member</a>
-        </div>
-        <a href="../logout.php" style="position: absolute; right: 30px;">Log out</a>
+    <!-- Tombol Hamburger -->
+    <div id="hamburger" onclick="toggleMenu()">☰</div>
+
+    <!-- Navigasi Admin -->
+    <nav class="nav-links">
+        <a href="index.php">Admin Home</a>
+        <a href="voucher.php">Kelola Voucher</a>
+        <a href="menu.php">Kelola Menu</a>
+        <a href="jenismenu.php">Kelola Jenis Menu</a>
+        <a href="member.php">Kelola Member</a>
+    </nav>
+    
+    <a href="../logout.php">Log out</a>
     </header>
+    <script>
+    function toggleMenu() {
+        const nav = document.querySelector('.nav-links');
+        nav.classList.toggle('show');
+    }
+    </script>
     
     <div style="
         height: 100vh;
@@ -88,79 +99,61 @@ if(isset($_GET['kode']) && isset($_GET['aksi'])){
             </a>
         </div>
 
-        <?php if(!$show_active): ?>
-            <h2>Member yang belum aktif:</h2>
-            <?php
-            $jmlh = $user->getTotalDataMemberNonActive();
-            $limit = 5;
-            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $max_page = ceil($jmlh/$limit);
-            $offset = ($page-1)*$limit;
-            $res = $user->getMemberNonActive($offset, $limit);
-            ?>
-            <?php if ($res && $res->num_rows > 0): ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Nama</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Foto</th>
-                            <th>Terima</th>
-                            <th>Tolak</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while($row = $res->fetch_assoc()): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($row['iduser']) ?></td>
-                            <td><?= htmlspecialchars($row['nama']) ?></td>
-                            <td><?= htmlspecialchars($row['tanggal_lahir']) ?></td>
-                            <td><img src="<?= htmlspecialchars($row["url_foto"]) ?>" alt="Foto Member"></td>
-                            <td><a href="member.php?kode=<?= htmlspecialchars($row['iduser']) ?>&aksi=terima&show=inactive" class="action-link accept">Terima</a></td>
-                            <td><a href="member.php?kode=<?= htmlspecialchars($row['iduser']) ?>&aksi=tolak&show=inactive" class="action-link decline">Tolak</a></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <p>No pending members.</p>
-            <?php endif; ?>
+<?php if(!$show_active): ?>
+    <h2>Member yang belum aktif:</h2>
+    <?php
+    $jmlh = $user->getTotalDataMemberNonActive();
+    $limit = 5;
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $max_page = ceil($jmlh/$limit);
+    $offset = ($page-1)*$limit;
+    $res = $user->getMemberNonActive($offset, $limit);
+    ?>
+    <?php if ($res && $res->num_rows > 0): ?>
+        <div class="card-grid">
+            <?php while($row = $res->fetch_assoc()): ?>
+                <div class="card">
+                    <img src="<?= htmlspecialchars($row["url_foto"]) ?>" alt="Foto Member">
+                    <div class="card-content">
+                        <h3><?= htmlspecialchars($row['nama']) ?> (<?= htmlspecialchars($row['iduser']) ?>)</h3>
+                        <p>Tgl Lahir: <?= htmlspecialchars($row['tanggal_lahir']) ?></p>
+                        <div class="card-actions">
+                            <a href="member.php?kode=<?= htmlspecialchars($row['iduser']) ?>&aksi=terima&show=inactive" class="action-link accept">Terima</a>
+                            <a href="member.php?kode=<?= htmlspecialchars($row['iduser']) ?>&aksi=tolak&show=inactive" class="action-link decline">Tolak</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+        </div>
+    <?php else: ?>
+        <p>No pending members.</p>
+    <?php endif; ?>
+    <?php else: ?>
+        <h2>Member yang sudah aktif:</h2>
+        <?php
+        $jmlh = $user->getTotalDataMemberActive();
+        $limit = 5;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $max_page = ceil($jmlh/$limit);
+        $offset = ($page-1)*$limit;
+        $res = $user->getMemberActive($offset, $limit);
+        ?>
+        <?php if ($res && $res->num_rows > 0): ?>
+            <div class="card-grid">
+                <?php while($row = $res->fetch_assoc()): ?>
+                    <div class="card">
+                        <img src="<?= htmlspecialchars($row["url_foto"]) ?>" alt="Foto Member">
+                        <div class="card-content">
+                            <h3><?= htmlspecialchars($row['nama']) ?> (<?= htmlspecialchars($row['iduser']) ?>)</h3>
+                            <p>Tgl Lahir: <?= htmlspecialchars($row['tanggal_lahir']) ?></p>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
         <?php else: ?>
-            <h2>Member yang sudah aktif:</h2>
-            <?php
-            $jmlh = $user->getTotalDataMemberActive();
-            $limit = 5;
-            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $max_page = ceil($jmlh/$limit);
-            $offset = ($page-1)*$limit;
-            $res = $user->getMemberActive($offset, $limit);
-            ?>
-            <?php if ($res && $res->num_rows > 0): ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Nama</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Foto</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while($row = $res->fetch_assoc()): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($row['iduser']) ?></td>
-                            <td><?= htmlspecialchars($row['nama']) ?></td>
-                            <td><?= htmlspecialchars($row['tanggal_lahir']) ?></td>
-                            <td><img src="<?= htmlspecialchars($row["url_foto"]) ?>" alt="Foto Member"></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <p>No active members.</p>
-            <?php endif; ?>
+            <p>No active members.</p>
         <?php endif; ?>
+    <?php endif; ?>
 
         <?php if($max_page > 1): ?>
             <div class="pagination">

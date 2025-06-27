@@ -43,16 +43,26 @@ if (isset($_GET['kode'])) {
 
 <body>
     <header id="header">
-        <div style="display: flex; gap: 20px;">
-            <a href="index.php">Admin Home</a>
-            <a href="voucher.php">Kelola Voucher</a>
-            <a href="menu.php">Kelola Menu</a>
-            <a href="jenismenu.php">Kelola Jenis Menu</a>
-            <a href="member.php">Kelola Member</a>
-            <a></a>
-        </div>
-        <a href="../logout.php" style="position: absolute; right: 30px;">Log out</a>
+    <!-- Tombol Hamburger -->
+    <div id="hamburger" onclick="toggleMenu()">☰</div>
+
+    <!-- Navigasi Admin -->
+    <nav class="nav-links">
+        <a href="index.php">Admin Home</a>
+        <a href="voucher.php">Kelola Voucher</a>
+        <a href="menu.php">Kelola Menu</a>
+        <a href="jenismenu.php">Kelola Jenis Menu</a>
+        <a href="member.php">Kelola Member</a>
+    </nav>
+    
+    <a href="../logout.php">Log out</a>
     </header>
+    <script>
+    function toggleMenu() {
+        const nav = document.querySelector('.nav-links');
+        nav.classList.toggle('show');
+    }
+    </script>
 
     <div style="
         height: 100vh;

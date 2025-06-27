@@ -17,18 +17,27 @@ else{ $message = ""; }
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    
     <header id="header">
+        <!-- Hamburger Button -->
+        <div id="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
         <div  class="nav-links">
             <a href="index.php">Home</a>
             <a href="menu.php">Menu</a>
             <a href="promo.php">Promo</a>
             <a href="voucherku.php">Voucherku</a>
-
         </div>
+
         <a href="logout.php">Log out</a>
     </header>
-    
+    <script>
+    function toggleMenu() {
+        const nav = document.querySelector('.nav-links');
+        nav.classList.toggle('show');
+    }
+    </script>
     
     <div style="
         height: 100vh;
@@ -55,7 +64,7 @@ else{ $message = ""; }
     
     
     <div style="
-        max-width: 100%; 
+        max-width: 100%;
         margin: 0 auto;
         position: relative;
         z-index: 1;
