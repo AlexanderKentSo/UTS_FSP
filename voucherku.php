@@ -32,8 +32,11 @@ if (!isset($_SESSION["USER"])) {
         <a href="promo.php">Promo</a>
         <a href="voucherku.php">Voucherku</a>
     </div>
-
-    <a href="logout.php">Log out</a>
+    <?php
+    echo (isset($_SESSION['USER']))?
+    "<a href='logout.php'>Log out</a>":
+    "<a href='login.php'>Log in</a>"
+    ?>
     </header>
     <script>
     function toggleMenu() {
@@ -91,7 +94,7 @@ if (!isset($_SESSION["USER"])) {
                     if ($voucher_aktif) {
                         echo "
                     <div class='card-footer'>
-                        <h3 style='margin:10px;'>kode unik: " . $row["kode_unik"] . "</h3>
+                        <h3 style='margin:10px; color:#8D6E63;'>kode unik: " . $row["kode_unik"] . "</h3>
                     </div>
                     </div>";
                     } else {

@@ -22,12 +22,12 @@ if(isset($_POST['insert'])){
 
     // Basic validation for required fields
     if (empty($jenis) || $jenis == 'none' || empty($nama) || empty($harga) || $gambar['error'] != UPLOAD_ERR_OK) {
-        $message = "Please fill all required fields and upload an image.";
+        $message = "Tolong isi semua data dan upload gambar yang vaild";
     } else {
         if (!is_null($menu->insertMenu($jenis, $nama, $harga, $gambar))) {
-            $message = "Data " . htmlspecialchars($nama) . " inserted successfully!";
+            $message = "Data " . htmlspecialchars($nama) . " berhasil dimasukan!";
         } else {
-            $message = "Failed to insert data. Please check file permissions or class logic.";
+            $message = "Insert data gagal, periksa kembali format input dan file nya";
         }
     }
 }
@@ -151,7 +151,7 @@ if(isset($_GET['kode'])){
                     </div>
                     <div class="card-footer">
                         <div class="voucher-action">
-                        <a href='menu.php?kode=<?= htmlspecialchars($row['kode']) ?>' class="delete-link" onclick="return confirm('Yakin ingin menghapus menu ini?');">Hapus</a> |
+                        <a href='menu.php?kode=<?= htmlspecialchars($row['kode']) ?>' class="delete-link" onclick="return confirm('Yakin ingin menghapus menu <?= htmlspecialchars(addslashes($row['nama'])) ?>?');">Hapus</a> |
                         <a href='ubahmenu.php?kode=<?= htmlspecialchars($row['kode']) ?>'>Ubah</a>
                         </div>
                     </div>

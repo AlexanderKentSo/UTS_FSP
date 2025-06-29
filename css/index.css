@@ -41,7 +41,6 @@ body {
     gap: 20px;
 }
 
-/* Hamburger default: hidden */
 #hamburger {
     display: none;
     font-size: 2em;
@@ -49,7 +48,6 @@ body {
     color: antiquewhite;
 }
 
-/* Responsive styles */
 @media (max-width: 1165px) {
     .nav-links {
         display: none;
@@ -60,7 +58,6 @@ body {
         background-color: rgba(0, 0, 0, 0.95);
         padding: 10px;
         border-radius: 5px;
-        z-index: 99;
     }
 
     .nav-links.show {
@@ -76,7 +73,6 @@ body {
     }
 }
 
-/* Common Content Wrapper Styles */
 .content-wrapper {
     position: relative;
     z-index: 1;
@@ -285,7 +281,7 @@ table a:hover {
 /* Promo Card Specific Styles */
 .grid-template {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     padding: 20px 0;
     justify-content: center;

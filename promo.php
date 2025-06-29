@@ -37,8 +37,11 @@ if (isset($_GET['kode'])) {
         <a href="promo.php">Promo</a>
         <a href="voucherku.php">Voucherku</a>
     </div>
-
-    <a href="logout.php">Log out</a>
+    <?php
+    echo (isset($_SESSION['USER']))?
+    "<a href='logout.php'>Log out</a>":
+    "<a href='login.php'>Log in</a>"
+    ?>
     </header>
     <script>
     function toggleMenu() {
@@ -97,13 +100,14 @@ if (isset($_GET['kode'])) {
                     <h3 style='margin:10px;'>diskon: " . $row["persen_diskon"] . "%</h3>
                     <h3 style='margin:10px;'>mulai berlaku: " . $row["mulai_berlaku"] . "</h3>
                     <h3 style='margin:10px;'>akhir berlaku: " . $row["akhir_berlaku"] . "</h3>
+                    <h3 style='margin:10px;'>kuota sisa: " . $row["kuota_sisa"] . "</h3>
                 </div>";
 
-                if ($voucher_aktif) {
+                if ($voucher_aktif && $row["kuota_sisa"]>0) {
                     echo "
                     <div class='card-footer'>
                     <a href='promo.php?kode=" . $row['kode'] . "'>
-                        <button class='btn-claim'>Claim Voucher</button>
+                        <button class='btn-claim'>Klaim Voucher</button>
                     </a>
                     </div>";
                 } else {

@@ -63,7 +63,6 @@ class classMenu extends classDB{
         $stmt->close();
 		return $res;
     }
-    
 
     public function insertMenu($jenis, $nama, $harga, $gambar){
         $stmt = $this->mysqli->prepare("INSERT INTO `menu` (`kode_jenis`,`nama`,`harga_jual`) VALUES (?,?,?);");

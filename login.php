@@ -14,10 +14,10 @@ if (isset($_POST['login'])) {
 
     // Validate inputs
     if (empty($iduser) || empty($password)) {
-        $message = "Username and password are required";
+        $message = "Tolong isi username dan password";
     } else {
         $result = $user->login($iduser);
-            if($result['profil']=='Member' && $result['isaktif']==0) { $message = "Wait for admin to accept your registration"; }
+            if($result['profil']=='Member' && $result['isaktif']==0) { $message = "Tunggu akunmu diverifikasi admin"; }
             else if ($result) {
             if (password_verify($password, $result['password'])) {
                 session_regenerate_id(true);
@@ -28,8 +28,8 @@ if (isset($_POST['login'])) {
                 $redirect = ($result['profil'] == "Admin") ? "admin/index.php" : "index.php";
                 header("Location: $redirect");
                 exit();
-            } else { $message = "Incorrect username or password"; }
-        } else { $message = "Incorrect username or password"; }
+            } else { $message = "Username atau password salah"; }
+        } else { $message = "Username atau password salah"; }
     }
 }
 ?>
@@ -75,7 +75,7 @@ if (isset($_POST['login'])) {
             background-color: #683416; 
             color:wheat">
         </form>
-        <a href="register.php" class="register-link">Don't have an account? Register here</a>
+        <a href="register.php" class="register-link">Tidak punya akun? Register di sini</a>
         <p class="message"><?=$message?></p>
     </div></div>
 </body>

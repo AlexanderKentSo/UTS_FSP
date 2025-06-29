@@ -163,23 +163,45 @@ class classVoucher extends classDB{
 
 
     public function insertVoucher($menu, $jenis, $nama, $start, $end, $kuota, $diskon) {
-        // Convert empty values to NULL
-        $menu = ($menu === '' || $menu === '0') ? null : (int)$menu;
-        $jenis = ($jenis === '' || $jenis === '0') ? null : (int)$jenis;
+        if ($start > $end) {
+            throw new Exception("Tanggal mulai tidak boleh lebih besar dari tanggal akhir");
+        }
 
-        $stmt = $this->mysqli->prepare(
-            "INSERT INTO `voucher` 
-            (`kode_menu`, `kode_jenis`, `nama`, `mulai_berlaku`, `akhir_berlaku`, `kuota_max`, `kuota_sisa`, `persen_diskon`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        if (is_null($menu)) {
+            if (is_null($jenis)) {
+                throw new Exception("Tolong isi jenis menu atau menu yang didiskon");
+            } else {
+                $jenis = (int)$jenis;
+                $stmt = $this->mysqli->prepare(
+                    "INSERT INTO `voucher` 
+                    (`kode_menu`, `kode_jenis`, `nama`, `mulai_berlaku`, `akhir_berlaku`, `kuota_max`, `kuota_sisa`, `persen_diskon`) 
+                    VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('isssiii', $jenis, $nama, $start, $end, $kuota, $kuota, $diskon);
+            }
+        } else {
+            $menu = (int)$menu;
+            if (is_null($jenis)) {
+                $stmt = $this->mysqli->prepare(
+                    "INSERT INTO `voucher` 
+                    (`kode_menu`, `kode_jenis`, `nama`, `mulai_berlaku`, `akhir_berlaku`, `kuota_max`, `kuota_sisa`, `persen_diskon`) 
+                    VALUES (?, NULL, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('isssiii', $menu, $nama, $start, $end, $kuota, $kuota, $diskon);
+            } else {
+                $jenis = (int)$jenis;
+                $stmt = $this->mysqli->prepare(
+                    "INSERT INTO `voucher` 
+                    (`kode_menu`, `kode_jenis`, `nama`, `mulai_berlaku`, `akhir_berlaku`, `kuota_max`, `kuota_sisa`, `persen_diskon`) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('iisssiii', $menu, $jenis, $nama, $start, $end, $kuota, $kuota, $diskon);
+            }
+        }
 
-        $stmt->bind_param('iisssiii',$menu,$jenis,$nama,$start,$end,$kuota,$kuota,$diskon);
-        
         if (!$stmt->execute()) {
             $error = $stmt->error;
             $stmt->close();
             throw new Exception("Insert failed: " . $error);
         }
-        
+
         $last_id = $stmt->insert_id;
         $stmt->close();
         return $last_id;

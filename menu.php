@@ -31,8 +31,11 @@ $jenisMenu = new classJenisMenu(); // Changed variable name for clarity
         <a href="promo.php">Promo</a>
         <a href="voucherku.php">Voucherku</a>
     </div>
-
-    <a href="logout.php">Log out</a>
+    <?php
+    echo (isset($_SESSION['USER']))?
+    "<a href='logout.php'>Log out</a>":
+    "<a href='login.php'>Log in</a>"
+    ?>
     </header>
     <script>
     function toggleMenu() {
@@ -73,7 +76,7 @@ $jenisMenu = new classJenisMenu(); // Changed variable name for clarity
             <br>
             <label for="jenis">Jenis Menu: </label>
             <select id="jenis">
-                <option value='' selected>All Categories</option>
+                <option value='' selected>Semua kategori</option>
                 <?php
                 $res = $jenisMenu->getJenisMenu();
                 while ($row = $res->fetch_assoc()) {
@@ -95,7 +98,7 @@ $jenisMenu = new classJenisMenu(); // Changed variable name for clarity
                     <div class='card-content'>
                         <h1 style='margin:0px;'>" . htmlspecialchars($row["nama_m"]) . "</h1>
                         <h3 style='margin:0px;'>" . htmlspecialchars($row["nama_mj"]) . "</h3>
-                        <h3 style='margin:0px;'>price: " . htmlspecialchars($row["harga_jual"]) . "</h3>
+                        <h3 style='margin:0px;'>harga: " . htmlspecialchars($row["harga_jual"]) . "</h3>
                     </div>
                 </div>";
                 }

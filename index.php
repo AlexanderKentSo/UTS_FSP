@@ -3,8 +3,8 @@ session_start();
 require_once("class/classMenu.php");
 $menu = new classMenu();
 
-$message = "Welcome";
-if($_SESSION["USER"]){ $message = "Welcome, ".$_SESSION["USER"]; }
+$message = "Selamat Datang";
+if($_SESSION["USER"]){ $message = "Selamat Datang, ".$_SESSION["USER"]; }
 else{ $message = ""; }
 ?>
 
@@ -29,8 +29,11 @@ else{ $message = ""; }
             <a href="promo.php">Promo</a>
             <a href="voucherku.php">Voucherku</a>
         </div>
-
-        <a href="logout.php">Log out</a>
+        <?php
+        echo (isset($_SESSION['USER']))?
+        "<a href='logout.php'>Log out</a>":
+        "<a href='login.php'>Log in</a>"
+        ?>
     </header>
     <script>
     function toggleMenu() {
@@ -89,8 +92,6 @@ else{ $message = ""; }
                 ";}
             ?>
         </div>
-
-        
     </div>
 </body>
 </html>

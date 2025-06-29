@@ -27,11 +27,11 @@ if(isset($_POST['insert'])){
 
     // Basic validation
     if (empty($nama) || empty($start) || empty($end) || !is_numeric($kuota) || !is_numeric($diskon)) {
-        $message = "Please fill all required fields correctly.";
+        $message = "Tolong isi data dengan format yang sesuai";
     } else if ($start > $end) {
         $message = "End date can't occur before start date.";
     } else if ($menu === '' && $jenis === '') {
-        $message = "Please select either a menu or a menu type for the discount.";
+        $message = "Tolong pilih jenis menu atau menu yang didiskon";
     } else {
         try {
             // Adjust 'none' string to actual NULL for database if your insertVoucher expects NULL
@@ -39,7 +39,7 @@ if(isset($_POST['insert'])){
             $jenis_id = ($jenis === 'none' || $jenis === '') ? NULL : $jenis;
 
             $result = $voucher->insertVoucher($menu_id, $jenis_id, $nama, $start, $end, $kuota, $diskon);
-            $message = "Data " . htmlspecialchars($nama) . " inserted successfully with ID: " . htmlspecialchars($result) . ".";
+            $message = "Data " . htmlspecialchars($nama) . " berhasil dimasukan";
         } catch(Exception $e) {
             $message = "Error: " . htmlspecialchars($e->getMessage()) . ".";
         }
@@ -120,7 +120,7 @@ if(isset($_GET['kode'])){
 
                 <label for="jenis">Jenis Menu yang diskon: </label>
                 <select name="jenis" id="jenis">
-                    <option value='none' selected disabled hidden>Select a Type (Optional)</option>
+                    <option value='none' selected disabled hidden>Pilih jenis menu yang diskon (Opsional)</option>
                     <option value='none'></option> <?php
                     $resJenis = $_JenisMenu->getJenisMenu(0, 100); // Fetch all for dropdown
                     while($row = $resJenis->fetch_assoc()) {
@@ -131,7 +131,7 @@ if(isset($_GET['kode'])){
 
                 <label for="menu">Menu yang diskon: </label>
                 <select name="menu" id="menu">
-                    <option value='none' selected disabled hidden>Select a Menu (Optional)</option>
+                    <option value='none' selected disabled hidden>Pilih menu yang diskon (Opsional)</option>
                     <option value='none'></option> <?php
                     $resMenu = $_Menu->getMenu(0, 100); // Fetch all for dropdown
                     while($row = $resMenu->fetch_assoc()) {
@@ -194,7 +194,7 @@ if(isset($_GET['kode'])){
                     <div class="voucher-actions">
                         <a href="voucher.php?kode=<?= htmlspecialchars($row['kode']) ?>" class="delete-link" onclick="return confirm('Yakin ingin menghapus voucher ini?');">Hapus</a>
                         <a href="ubahvoucher.php?kode=<?= htmlspecialchars($row['kode']) ?>">Ubah</a>
-                        <a href="membervoucher.php?kode=<?= htmlspecialchars($row['kode']) ?>">Member Claim</a>
+                        <a href="membervoucher.php?kode=<?= htmlspecialchars($row['kode']) ?>">Member klaim</a>
                     </div>
                     </div>
                 </div>

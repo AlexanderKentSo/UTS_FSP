@@ -14,7 +14,7 @@ if ($_SESSION["USER"] != "admin") {
 if (isset($_POST['insert'])) {
     $nama = $_POST['nama'];
     if (!is_null($jenisMenu->insertJenisMenu($nama))) {
-        $message = "Data " . htmlspecialchars($nama) . " inserted successfully"; // Sanitize output
+        $message = "Data " . htmlspecialchars($nama) . " berhasil dimasukan"; // Sanitize output
     } else {
         $message = "Failed to insert data."; // Add a failure message
     }
@@ -125,7 +125,7 @@ if (isset($_GET['kode'])) {
             while ($row = $res->fetch_assoc()) {
                 echo "<tr>
                         <td>" . htmlspecialchars($row['nama']) . "</td>
-                        <td> <a href='jenismenu.php?kode=" . htmlspecialchars($row['kode']) . "' class='delete-link' onclick='return confirm(\"Are you sure you want to delete this item?\");'>Hapus Data</a> </td>
+                        <td> <a href='jenismenu.php?kode=" . htmlspecialchars($row['kode']) . "' class='delete-link' onclick='return confirm(\"Yakin ingin menghapus data ".$row['nama']."?\");'>Hapus Data</a> </td>
                         <td> <a href='ubahjenismenu.php?kode=" . htmlspecialchars($row['kode']) . "'>Ubah Data</a> </td>
                     </tr>";
             }
