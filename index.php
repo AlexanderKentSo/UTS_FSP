@@ -86,7 +86,7 @@ else{ $message = ""; }
                 <div class='card-content'>
                     <h1 style='margin:0px;'>".$row["nama_m"]."</h1>
                     <h3 style='margin:0px;''>".$row["nama_mj"]."</h3>
-                    <h3 style='margin:0px;''>price: ".$row["harga_jual"]."</h3>
+                    <h3 style='margin:0px;''>harga: ".$row["harga_jual"]."</h3>
                 </div>
                 </div>
                 ";}

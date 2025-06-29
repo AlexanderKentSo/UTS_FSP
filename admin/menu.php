@@ -151,7 +151,7 @@ if(isset($_GET['kode'])){
                     </div>
                     <div class="card-footer">
                         <div class="voucher-action">
-                        <a href='menu.php?kode=<?= htmlspecialchars($row['kode']) ?>' class="delete-link" onclick="return confirm('Yakin ingin menghapus menu <?= htmlspecialchars(addslashes($row['nama'])) ?>?');">Hapus</a> |
+                        <a href='menu.php?kode=<?= htmlspecialchars($row['kode']) ?>' class="delete-link" onclick="return confirm('Yakin ingin menghapus menu <?= htmlspecialchars(addslashes($row['nama_m'])) ?>?');">Hapus</a> |
                         <a href='ubahmenu.php?kode=<?= htmlspecialchars($row['kode']) ?>'>Ubah</a>
                         </div>
                     </div>

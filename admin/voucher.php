@@ -192,7 +192,7 @@ if(isset($_GET['kode'])){
                         <?php endif; ?>
                     </div>
                     <div class="voucher-actions">
-                        <a href="voucher.php?kode=<?= htmlspecialchars($row['kode']) ?>" class="delete-link" onclick="return confirm('Yakin ingin menghapus voucher ini?');">Hapus</a>
+                        <a href="voucher.php?kode=<?= htmlspecialchars($row['kode']) ?>" class="delete-link" onclick="return confirm('Yakin ingin menghapus menu <?= htmlspecialchars(addslashes($row['vnama'])) ?>?');">Hapus</a>
                         <a href="ubahvoucher.php?kode=<?= htmlspecialchars($row['kode']) ?>">Ubah</a>
                         <a href="membervoucher.php?kode=<?= htmlspecialchars($row['kode']) ?>">Member klaim</a>
                     </div>
