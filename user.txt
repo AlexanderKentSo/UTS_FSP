@@ -25,4 +25,13 @@ password: member6
 username: m7*
 password: member7
 
+username: m8*
+password: member8
+
+username: m9
+password: member9
+
+username: m10*
+password: member10
+
 yang dibintangi (*) belum aktif secara default

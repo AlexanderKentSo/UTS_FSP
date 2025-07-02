@@ -41,7 +41,7 @@ CREATE TABLE `kepemilikan_voucher` (
 
 LOCK TABLES `kepemilikan_voucher` WRITE;
 /*!40000 ALTER TABLE `kepemilikan_voucher` DISABLE KEYS */;
-INSERT INTO `kepemilikan_voucher` VALUES ('m17073011',29,'voc1751158249316a',NULL);
+INSERT INTO `kepemilikan_voucher` VALUES ('m17073011',29,'voc1751158249316a',NULL),('m17073011',36,'voc1751352451ef88',NULL),('m28050640',36,'voc1751352437e4fe',NULL);
 /*!40000 ALTER TABLE `kepemilikan_voucher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +71,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES ('m17073011','m1','m1','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',1),('m17073037','m2','m2','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073701','m3','m3','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073717','m4','m4','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073818','m5','m5','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073847','m6','m6','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073909','m7','m7','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m28050640','m9','member9','2025-06-28','https://preview.redd.it/okay-lets-face-reality-when-will-we-see-firefly-again-v0-xikjdmsmmaad1.jpeg?',1),('m29014316','m10','m10','2025-06-29','https://i.ytimg.com/vi/eFXQqY3ia6k/maxresdefault.jpg',0),('m29063937','calvin','calvin chou','2003-12-16','1',1),('m29065956','bebek','bebek','2025-04-28','2',0);
+INSERT INTO `member` VALUES ('m17073011','m1','m1','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',1),('m17073037','m2','m2','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073701','m3','m3','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073717','m4','m4','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073818','m5','m5','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073847','m6','m6','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m17073909','m7','m7','2025-04-17','https://cdn.oneesports.gg/cdn-data/2024/05/honkai_star_rail_firefly_and_trailblazer-1024x576.jpg',0),('m28050640','m9','m9','2025-06-28','https://preview.redd.it/okay-lets-face-reality-when-will-we-see-firefly-again-v0-xikjdmsmmaad1.jpeg?',1),('m29014316','m10','m10','2025-06-29','https://i.ytimg.com/vi/eFXQqY3ia6k/maxresdefault.jpg',0);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +149,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('admin','$2y$10$gYZQ9XFkCN1Y2bcDVtif6ezwMLSu.K0fJcMGV9LBp0n2NjIzd8RJm','Admin'),('bebek','$2y$10$PpKWKNlxfjiNxtpQwym36uXEdCqh4Eo0YS.H01c1gM36zVn4C8a56','Member'),('calvin','$2y$10$8LUCkAcF.ZYbxeAGR0VpvOOdd9PgjwqU2fLdGfcwzLWM6S3GnyDyi','Member'),('m1','$2y$10$BZJ7IlmgLXov3amEWWNpR.WiOamktZadczGGfJM6LQuJqNi0i75/2','Member'),('m10','$2y$10$uLxzNpR0Htk24hzi9YxhDeFRwY01XvmLkFFxh7MmoMzYD9GYae1Om','Member'),('m2','$2y$10$RC7e0QwIZZcADGTHQ0jJF.lCWMxPPGlWO0hYcYNZHaT7xSn0rgCd.','Member'),('m3','$2y$10$/.m/6h7MRo299rx12i1bS.fNjVBW8ZHpjraO5NPHINabPxhgJyRUC','Member'),('m4','$2y$10$ySt4IVsZxHrn1z9Tk2pge.V9FF/dAXWs/QwYAWqbnR9g6e3FeklSO','Member'),('m5','$2y$10$XRdgbTCJIpKgST.BXwoaT.BqDDdveoFoWRTGeLl1k5tud6m4lBCo6','Member'),('m6','$2y$10$fmYrloySOGEZQTpi5U9hq.UforbHvYwUTHQojxHVF46/sWmPH.KlC','Member'),('m7','$2y$10$Jk0ksuSL1AW1znwWZcchtuQumPXXuSZk2QwRXKmp6iqjnD7Z9mUdi','Member'),('m9','$2y$10$DDGl7me0RdAt2fSBnZ58hO9TdSEHeA5lxqdyvI3Z5nwVrZ9fyRSUW','Member');
+INSERT INTO `users` VALUES ('admin','$2y$10$gYZQ9XFkCN1Y2bcDVtif6ezwMLSu.K0fJcMGV9LBp0n2NjIzd8RJm','Admin'),('m1','$2y$10$BZJ7IlmgLXov3amEWWNpR.WiOamktZadczGGfJM6LQuJqNi0i75/2','Member'),('m10','$2y$10$uLxzNpR0Htk24hzi9YxhDeFRwY01XvmLkFFxh7MmoMzYD9GYae1Om','Member'),('m2','$2y$10$RC7e0QwIZZcADGTHQ0jJF.lCWMxPPGlWO0hYcYNZHaT7xSn0rgCd.','Member'),('m3','$2y$10$/.m/6h7MRo299rx12i1bS.fNjVBW8ZHpjraO5NPHINabPxhgJyRUC','Member'),('m4','$2y$10$ySt4IVsZxHrn1z9Tk2pge.V9FF/dAXWs/QwYAWqbnR9g6e3FeklSO','Member'),('m5','$2y$10$XRdgbTCJIpKgST.BXwoaT.BqDDdveoFoWRTGeLl1k5tud6m4lBCo6','Member'),('m6','$2y$10$fmYrloySOGEZQTpi5U9hq.UforbHvYwUTHQojxHVF46/sWmPH.KlC','Member'),('m7','$2y$10$Jk0ksuSL1AW1znwWZcchtuQumPXXuSZk2QwRXKmp6iqjnD7Z9mUdi','Member'),('m9','$2y$10$DDGl7me0RdAt2fSBnZ58hO9TdSEHeA5lxqdyvI3Z5nwVrZ9fyRSUW','Member');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +184,7 @@ CREATE TABLE `voucher` (
 
 LOCK TABLES `voucher` WRITE;
 /*!40000 ALTER TABLE `voucher` DISABLE KEYS */;
-INSERT INTO `voucher` VALUES (29,NULL,11,'Voucher 1','2025-06-29 00:00:00','2025-07-29 00:00:00',1,0,100),(31,47,11,'Voucher 3','2025-06-29 00:00:00','2025-07-29 00:00:00',1,1,100),(36,NULL,15,'Voucher 4.2','2025-06-29 00:00:00','2025-07-29 00:00:00',2,2,50);
+INSERT INTO `voucher` VALUES (29,NULL,11,'Voucher 1','2025-06-29 00:00:00','2025-07-29 00:00:00',1,0,100),(31,47,11,'Voucher 3','2025-06-29 00:00:00','2025-07-29 00:00:00',1,1,100),(36,NULL,15,'Voucher 4.2','2025-06-29 00:00:00','2025-07-29 00:00:00',2,0,50);
 /*!40000 ALTER TABLE `voucher` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -197,4 +197,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-29  9:25:40
+-- Dump completed on 2025-07-01 13:50:09
